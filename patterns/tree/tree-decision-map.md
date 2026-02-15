@@ -2,9 +2,11 @@
 
 > Use this **before** coding. Read the problem statement, then walk this flowchart.
 
----
+***
 
 ## Decision Flowchart
+
+***
 
 ```mermaid
 flowchart TD
@@ -29,20 +31,18 @@ flowchart TD
     Q6 -->|No| P4
 ```
 
----
-
 ## Quick Decision Table
 
-| Signal in Problem | Pattern | File |
-|---|---|---|
-| "build tree from traversal" | Tree Construction | `tree-construction.md` |
-| "visit", "print", "serialize", "collect" | Traversal | `traversal.md` |
-| "height", "depth", "balanced", "min depth" | Tree Height | `tree-height.md` |
-| "diameter", "max path sum", "longest path" | Tree DP | `tree-dp.md` |
-| "root-to-leaf", "path sum", "validate BST" | Path Tracking | `path-tracking.md` |
-| "distance from every node", "answer for each node" | Rerooting DP | `rerooting-dp.md` |
+| Signal in Problem                                  | Pattern           | File                   |
+| -------------------------------------------------- | ----------------- | ---------------------- |
+| "build tree from traversal"                        | Tree Construction | `tree-construction.md` |
+| "visit", "print", "serialize", "collect"           | Traversal         | `traversal.md`         |
+| "height", "depth", "balanced", "min depth"         | Tree Height       | `tree-height.md`       |
+| "diameter", "max path sum", "longest path"         | Tree DP           | `tree-dp.md`           |
+| "root-to-leaf", "path sum", "validate BST"         | Path Tracking     | `path-tracking.md`     |
+| "distance from every node", "answer for each node" | Rerooting DP      | `rerooting-dp.md`      |
 
----
+***
 
 ## The Two Questions That Matter Most
 
@@ -54,20 +54,20 @@ If you can't answer this in one sentence, you haven't understood the problem.
 
 ### 2. Where does the answer live?
 
-| Answer location | Pattern family |
-|---|---|
-| **In the return value** | Height, Construction, Traversal |
-| **In a global variable** | Tree DP |
-| **In the parameters** | Path Tracking |
-| **Both return + parameters** | Rerooting DP |
+| Answer location              | Pattern family                  |
+| ---------------------------- | ------------------------------- |
+| **In the return value**      | Height, Construction, Traversal |
+| **In a global variable**     | Tree DP                         |
+| **In the parameters**        | Path Tracking                   |
+| **Both return + parameters** | Rerooting DP                    |
 
----
+***
 
 ## Common Traps
 
-| Trap | What actually happens |
-|---|---|
-| "Looks like Height" but has "through node" | It's **Tree DP**, not Height |
-| "Looks like Tree DP" but info flows downward | It's **Path Tracking** |
-| "Need answer for root" vs "for every node" | Root only → Tree DP / Height. Every node → **Rerooting DP** |
-| "Build tree" confused with "modify tree" | Building → Construction. Modifying → usually Traversal + mutation |
+| Trap                                         | What actually happens                                             |
+| -------------------------------------------- | ----------------------------------------------------------------- |
+| "Looks like Height" but has "through node"   | It's **Tree DP**, not Height                                      |
+| "Looks like Tree DP" but info flows downward | It's **Path Tracking**                                            |
+| "Need answer for root" vs "for every node"   | Root only → Tree DP / Height. Every node → **Rerooting DP**       |
+| "Build tree" confused with "modify tree"     | Building → Construction. Modifying → usually Traversal + mutation |
