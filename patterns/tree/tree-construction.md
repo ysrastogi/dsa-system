@@ -57,11 +57,20 @@ Global    → inorder index map (optimization)
 
 ```mermaid
 flowchart TD
-    A["build(pre=[3,9,20,15,7], in=[9,3,15,20,7])\nroot=3, split inorder at idx 1"] 
-    A --> B["build left\npre=[9], in=[9]\nroot=9, leaf"]
-    A --> C["build right\npre=[20,15,7], in=[15,20,7]\nroot=20, split at idx 1"]
-    C --> D["build left\npre=[15], in=[15]\nroot=15, leaf"]
-    C --> E["build right\npre=[7], in=[7]\nroot=7, leaf"]
+    A["build(pre=[3,9,20,15,7], in=[9,3,15,20,7])
+root=3, split inorder at idx 1"] 
+    A --> B["build left
+pre=[9], in=[9]
+root=9, leaf"]
+    A --> C["build right
+pre=[20,15,7], in=[15,20,7]
+root=20, split at idx 1"]
+    C --> D["build left
+pre=[15], in=[15]
+root=15, leaf"]
+    C --> E["build right
+pre=[7], in=[7]
+root=7, leaf"]
 ```
 
 ---

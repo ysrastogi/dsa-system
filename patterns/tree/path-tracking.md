@@ -58,11 +58,17 @@ Global    → result collection (optional)
 
 ```mermaid
 flowchart TD
-    A["Node 5\nstate = 5"] --> B["Node 4\nstate = 5+4 = 9"]
-    A --> C["Node 8\nstate = 5+8 = 13"]
-    B --> D["Node 11\nstate = 9+11 = 20"]
-    D --> E["Node 7\nstate = 20+7 = 27"]
-    D --> F["Node 2\nstate = 20+2 = 22 ✅"]
+    A["Node 5
+state = 5"] --> B["Node 4
+state = 5+4 = 9"]
+    A --> C["Node 8
+state = 5+8 = 13"]
+    B --> D["Node 11
+state = 9+11 = 20"]
+    D --> E["Node 7
+state = 20+7 = 27"]
+    D --> F["Node 2
+state = 20+2 = 22 ✅"]
     
     style F fill:#2d5a3d,stroke:#4a9,color:#fff
 ```

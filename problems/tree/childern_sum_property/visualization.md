@@ -14,13 +14,36 @@
 
 ```mermaid
 flowchart TD
-    A["Node 2 (root)\n━━━━━━━━━\nchildSum=45 ≥ 2\nSet val=45\nRecurse...\nPull up: 55+14=69"]:::modified
-    B["Node 35\n━━━━━━━━━\nchildSum=5 < 35\nPush 35→children\nRecurse...\nPull up: 35+20=55"]:::modified
-    C["Node 10\n━━━━━━━━━\nchildSum=7 < 10\nPush 10→children\nRecurse...\nPull up: 9+5=14"]:::modified
-    D["Node 2→35 (leaf)\nVal stays 35"]:::leaf
-    E["Node 3→35 (leaf)\n━━━━━━━━━\nchildSum=5<35, push\nPull up: stays 20"]:::leaf
-    F["Node 5→10 (leaf)\n━━━━━━━━━\nchildSum=2<10, push\nPull up: stays 9"]:::leaf
-    G["Node 2→10 (leaf)\nVal stays 5"]:::leaf
+    A["Node 2 (root)
+━━━━━━━━━
+childSum=45 ≥ 2
+Set val=45
+Recurse...
+Pull up: 55+14=69"]:::modified
+    B["Node 35
+━━━━━━━━━
+childSum=5 < 35
+Push 35→children
+Recurse...
+Pull up: 35+20=55"]:::modified
+    C["Node 10
+━━━━━━━━━
+childSum=7 < 10
+Push 10→children
+Recurse...
+Pull up: 9+5=14"]:::modified
+    D["Node 2→35 (leaf)
+Val stays 35"]:::leaf
+    E["Node 3→35 (leaf)
+━━━━━━━━━
+childSum=5<35, push
+Pull up: stays 20"]:::leaf
+    F["Node 5→10 (leaf)
+━━━━━━━━━
+childSum=2<10, push
+Pull up: stays 9"]:::leaf
+    G["Node 2→10 (leaf)
+Val stays 5"]:::leaf
 
     A -->|left| B
     A -->|right| C

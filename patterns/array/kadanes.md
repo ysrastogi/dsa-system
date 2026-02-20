@@ -128,15 +128,33 @@ PROOF: we consider ALL possible ending positions → answer is correct
 
 ```mermaid
 flowchart TD
-    S0["i=0: arr=-2\ncurrent=max(-2, -2)=-2\nbest=-2"]
-    S1["i=1: arr=1\ncurrent=max(1, -2+1)=1 🔄 restart\nbest=1"]
-    S2["i=2: arr=-3\ncurrent=max(-3, 1-3)=-2 → extend\nbest=1"]
-    S3["i=3: arr=4\ncurrent=max(4, -2+4)=4 🔄 restart\nbest=4"]
-    S4["i=4: arr=-1\ncurrent=max(-1, 4-1)=3 → extend\nbest=4"]
-    S5["i=5: arr=2\ncurrent=max(2, 3+2)=5 → extend\nbest=5"]
-    S6["i=6: arr=1\ncurrent=max(1, 5+1)=6 → extend\nbest=6 ✅"]
-    S7["i=7: arr=-5\ncurrent=max(-5, 6-5)=1 → extend\nbest=6"]
-    S8["i=8: arr=4\ncurrent=max(4, 1+4)=5 → extend\nbest=6"]
+    S0["i=0: arr=-2
+current=max(-2, -2)=-2
+best=-2"]
+    S1["i=1: arr=1
+current=max(1, -2+1)=1 🔄 restart
+best=1"]
+    S2["i=2: arr=-3
+current=max(-3, 1-3)=-2 → extend
+best=1"]
+    S3["i=3: arr=4
+current=max(4, -2+4)=4 🔄 restart
+best=4"]
+    S4["i=4: arr=-1
+current=max(-1, 4-1)=3 → extend
+best=4"]
+    S5["i=5: arr=2
+current=max(2, 3+2)=5 → extend
+best=5"]
+    S6["i=6: arr=1
+current=max(1, 5+1)=6 → extend
+best=6 ✅"]
+    S7["i=7: arr=-5
+current=max(-5, 6-5)=1 → extend
+best=6"]
+    S8["i=8: arr=4
+current=max(4, 1+4)=5 → extend
+best=6"]
 
     S0 --> S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7 --> S8
 
@@ -151,8 +169,10 @@ flowchart TD
 flowchart TD
     D["At index i"]
     C{"current + arr[i] > arr[i]?"}
-    E["EXTEND: current += arr[i]\nPrevious prefix is helping"]
-    R["RESTART: current = arr[i]\nPrevious prefix was a burden"]
+    E["EXTEND: current += arr[i]
+Previous prefix is helping"]
+    R["RESTART: current = arr[i]
+Previous prefix was a burden"]
     U["Update best = max(best, current)"]
 
     D --> C

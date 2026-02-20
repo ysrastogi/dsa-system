@@ -16,13 +16,20 @@
 
 ```mermaid
 flowchart TD
-    A["Node 1\nidx: 0"]
-    B["Node 3\nidx: 0 (norm)"]
-    C["Node 2\nidx: 1"]
-    D["Node 5\nidx: 0 (norm)"]
-    G["Node 9\nidx: 3"]
-    H["Node 6\nidx: 0 (norm)"]
-    I["Node 7\nidx: 7"]
+    A["Node 1
+idx: 0"]
+    B["Node 3
+idx: 0 (norm)"]
+    C["Node 2
+idx: 1"]
+    D["Node 5
+idx: 0 (norm)"]
+    G["Node 9
+idx: 3"]
+    H["Node 6
+idx: 0 (norm)"]
+    I["Node 7
+idx: 7"]
 
     A -->|"left: 2×0+1=1 → norm 0"| B
     A -->|"right: 2×0+2=2 → norm 1"| C

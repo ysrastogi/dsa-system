@@ -138,7 +138,10 @@ flowchart TD
     B --> D["combine"]
     C --> D
     D --> E{"What flows where?"}
-    E -->|"Up"| F["Return value\n(Height, DP chain)"]
-    E -->|"Down"| G["Parameters\n(Path sum, BST range)"]
-    E -->|"Global"| H["Side channel\n(Diameter, max path)"]
+    E -->|"Up"| F["Return value
+(Height, DP chain)"]
+    E -->|"Down"| G["Parameters
+(Path sum, BST range)"]
+    E -->|"Global"| H["Side channel
+(Diameter, max path)"]
 ```

@@ -48,22 +48,28 @@ Longest substring with at most 2 distinct chars in `"eceba"`:
 ```mermaid
 flowchart LR
     subgraph "Step 1: expand"
-        A["[e] → {e:1}\nbest=1"]
+        A["[e] → {e:1}
+best=1"]
     end
     subgraph "Step 2: expand"
-        B["[e,c] → {e:1,c:1}\nbest=2"]
+        B["[e,c] → {e:1,c:1}
+best=2"]
     end
     subgraph "Step 3: expand"
-        C["[e,c,e] → {e:2,c:1}\nbest=3"]
+        C["[e,c,e] → {e:2,c:1}
+best=3"]
     end
     subgraph "Step 4: expand"
-        D["[e,c,e,b] → {e:2,c:1,b:1}\n3 distinct! shrink"]
+        D["[e,c,e,b] → {e:2,c:1,b:1}
+3 distinct! shrink"]
     end
     subgraph "Step 5: shrink"
-        E["[c,e,b] → {e:1,c:1,b:1}\nstill 3! shrink"]
+        E["[c,e,b] → {e:1,c:1,b:1}
+still 3! shrink"]
     end
     subgraph "Step 6: shrink"
-        F["[e,b] → {e:1,b:1}\nbest=3"]
+        F["[e,b] → {e:1,b:1}
+best=3"]
     end
 
     A --> B --> C --> D --> E --> F

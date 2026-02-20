@@ -101,8 +101,10 @@ Two Sum with target 9 on `[1, 3, 4, 6, 8, 10]`:
 ```mermaid
 flowchart TD
     S0["🔍 Array: [1, 3, 4, 6, 8, 10]  target=9"]
-    S1["L=0, R=5 → 1+10=11 > 9\n❌ Sum too big → R--"]
-    S2["L=0, R=4 → 1+8=9\n✅ Found pair!"]
+    S1["L=0, R=5 → 1+10=11 > 9
+❌ Sum too big → R--"]
+    S2["L=0, R=4 → 1+8=9
+✅ Found pair!"]
 
     S0 --> S1 --> S2
 

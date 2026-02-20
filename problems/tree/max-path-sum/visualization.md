@@ -14,11 +14,29 @@
 
 ```mermaid
 flowchart TD
-    A["Node -10\n───────────\nL=9, R=42\nglobal = max(_, 9+42+(-10)) = 41\nReturn: max(0, max(9,42)+(-10)) = 32"]
-    B["Node 9\n───────────\nLeaf\nglobal = max(_, 9) = 9\nReturn: max(0, 9) = 9"]
-    C["Node 20\n───────────\nL=15, R=7\nglobal = max(_, 15+7+20) = 42 ✅\nReturn: max(0, max(15,7)+20) = 35"]
-    D["Node 15\n───────────\nLeaf\nReturn: max(0, 15) = 15"]
-    E["Node 7\n───────────\nLeaf\nReturn: max(0, 7) = 7"]
+    A["Node -10
+───────────
+L=9, R=42
+global = max(_, 9+42+(-10)) = 41
+Return: max(0, max(9,42)+(-10)) = 32"]
+    B["Node 9
+───────────
+Leaf
+global = max(_, 9) = 9
+Return: max(0, 9) = 9"]
+    C["Node 20
+───────────
+L=15, R=7
+global = max(_, 15+7+20) = 42 ✅
+Return: max(0, max(15,7)+20) = 35"]
+    D["Node 15
+───────────
+Leaf
+Return: max(0, 15) = 15"]
+    E["Node 7
+───────────
+Leaf
+Return: max(0, 7) = 7"]
 
     A -->|left| B
     A -->|right| C

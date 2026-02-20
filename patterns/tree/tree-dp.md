@@ -54,11 +54,23 @@ Global    → best forked answer (cross-node)
 
 ```mermaid
 flowchart BT
-    D["Node 4\nchain: 4\nglobal: 4"] -->|"returns 4"| B
-    E["Node 5\nchain: 5\nglobal: 5"] -->|"returns 5"| B
-    B["Node 2\nfork: 4+5+2=11\nchain: max(4,5)+2=7\nglobal: 11 ✅"] -->|"returns 7"| A
-    C["Node 3\nchain: 3\nglobal: 11"] -->|"returns 3"| A
-    A["Node 1\nfork: 7+3+1=11\nchain: max(7,3)+1=8\nglobal: 11"]
+    D["Node 4
+chain: 4
+global: 4"] -->|"returns 4"| B
+    E["Node 5
+chain: 5
+global: 5"] -->|"returns 5"| B
+    B["Node 2
+fork: 4+5+2=11
+chain: max(4,5)+2=7
+global: 11 ✅"] -->|"returns 7"| A
+    C["Node 3
+chain: 3
+global: 11"] -->|"returns 3"| A
+    A["Node 1
+fork: 7+3+1=11
+chain: max(7,3)+1=8
+global: 11"]
     
     style B fill:#2d5a3d,stroke:#4a9,color:#fff
 ```

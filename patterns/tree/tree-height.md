@@ -54,11 +54,18 @@ Global    → nothing
 
 ```mermaid
 flowchart BT
-    D["Node 4\nreturns 1"] --> B
-    E["Node 5\nreturns 1"] --> B
-    B["Node 2\nmax(1,1)+1\nreturns 2"] --> A
-    C["Node 3\nreturns 1"] --> A
-    A["Node 1\nmax(2,1)+1\nreturns 3"]
+    D["Node 4
+returns 1"] --> B
+    E["Node 5
+returns 1"] --> B
+    B["Node 2
+max(1,1)+1
+returns 2"] --> A
+    C["Node 3
+returns 1"] --> A
+    A["Node 1
+max(2,1)+1
+returns 3"]
 ```
 
 ---

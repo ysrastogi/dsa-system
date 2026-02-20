@@ -42,8 +42,10 @@ Two Sum with target 9 on `[1, 2, 4, 6, 8, 10]`:
 
 ```mermaid
 flowchart TD
-    A["L=0 R=5 → 1+10=11 > 9\nR--"]
-    B["L=0 R=4 → 1+8=9 ✅\nFound!"]
+    A["L=0 R=5 → 1+10=11 > 9
+R--"]
+    B["L=0 R=4 → 1+8=9 ✅
+Found!"]
 
     A --> B
 ```
@@ -53,16 +55,24 @@ Container With Most Water — pointer movement:
 ```mermaid
 flowchart LR
     subgraph "Step 1"
-        A["L=0(h=1) R=5(h=3)\nArea=1×5=5\nMove L (shorter)"]
+        A["L=0(h=1) R=5(h=3)
+Area=1×5=5
+Move L (shorter)"]
     end
     subgraph "Step 2"
-        B["L=1(h=8) R=5(h=3)\nArea=3×4=12\nMove R (shorter)"]
+        B["L=1(h=8) R=5(h=3)
+Area=3×4=12
+Move R (shorter)"]
     end
     subgraph "Step 3"
-        C["L=1(h=8) R=4(h=6)\nArea=6×3=18\nMove R (shorter)"]
+        C["L=1(h=8) R=4(h=6)
+Area=6×3=18
+Move R (shorter)"]
     end
     subgraph "Step 4"
-        D["L=1(h=8) R=3(h=2)\nArea=2×2=4\nMove R"]
+        D["L=1(h=8) R=3(h=2)
+Area=2×2=4
+Move R"]
     end
 
     A --> B --> C --> D

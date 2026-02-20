@@ -135,8 +135,12 @@ func (tr Trace) PrintTerminal() {
 		dim     = "\033[2m"
 	)
 
-	fmt.Printf("\n%s%s=== %s — %s ===%s\n", bold, magenta, tr.Problem, tr.Algorithm, reset)
-	fmt.Printf("%sInput: %v%s\n\n", dim, tr.TreeInput, reset)
+	fmt.Printf("
+%s%s=== %s — %s ===%s
+", bold, magenta, tr.Problem, tr.Algorithm, reset)
+	fmt.Printf("%sInput: %v%s
+
+", dim, tr.TreeInput, reset)
 
 	for _, step := range tr.Steps {
 		// Step header
@@ -154,7 +158,8 @@ func (tr Trace) PrintTerminal() {
 			actionColor = cyan
 		}
 
-		fmt.Printf("%s%sStep %d%s · %s%s%s · Node %s\n",
+		fmt.Printf("%s%sStep %d%s · %s%s%s · Node %s
+",
 			bold, actionColor, step.ID, reset,
 			actionColor, step.Action, reset,
 			step.NodeID)
@@ -162,22 +167,29 @@ func (tr Trace) PrintTerminal() {
 		// Variables
 		if len(step.Variables) > 0 {
 			for k, v := range step.Variables {
-				fmt.Printf("  %s%s%s = %v\n", cyan, k, reset, v)
+				fmt.Printf("  %s%s%s = %v
+", cyan, k, reset, v)
 			}
 		}
 
 		// Message
 		if step.Message != "" {
 			if step.Action == "update" {
-				fmt.Printf("  %s%s🏆 %s%s\n", bold, red, step.Message, reset)
+				fmt.Printf("  %s%s🏆 %s%s
+", bold, red, step.Message, reset)
 			} else {
-				fmt.Printf("  %s💬 %s%s\n", dim, step.Message, reset)
+				fmt.Printf("  %s💬 %s%s
+", dim, step.Message, reset)
 			}
 		}
 
 		// Call stack
-		fmt.Printf("  %sStack: [%s]%s\n\n", dim, strings.Join(step.CallStack, " → "), reset)
+		fmt.Printf("  %sStack: [%s]%s
+
+", dim, strings.Join(step.CallStack, " → "), reset)
 	}
 
-	fmt.Printf("%s%s✅ Answer: %v%s\n\n", bold, green, tr.Answer, reset)
+	fmt.Printf("%s%s✅ Answer: %v%s
+
+", bold, green, tr.Answer, reset)
 }

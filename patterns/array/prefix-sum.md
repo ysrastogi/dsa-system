@@ -160,10 +160,14 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    S0["arr=[1,2,3,-3,1,1,1,4,2,-3] k=3\nprefixSum=0, freq={0:1}, count=0"]
-    S1["i=0: pSum=1, need 1-3=-2, freq[-2]=0\ncount=0, freq={0:1, 1:1}"]
-    S2["i=1: pSum=3, need 3-3=0, freq[0]=1 ✅\ncount=1, freq={0:1, 1:1, 3:1}"]
-    S3["i=2: pSum=6, need 6-3=3, freq[3]=1 ✅\ncount=2, freq={..., 6:1}"]
+    S0["arr=[1,2,3,-3,1,1,1,4,2,-3] k=3
+prefixSum=0, freq={0:1}, count=0"]
+    S1["i=0: pSum=1, need 1-3=-2, freq[-2]=0
+count=0, freq={0:1, 1:1}"]
+    S2["i=1: pSum=3, need 3-3=0, freq[0]=1 ✅
+count=1, freq={0:1, 1:1, 3:1}"]
+    S3["i=2: pSum=6, need 6-3=3, freq[3]=1 ✅
+count=2, freq={..., 6:1}"]
     S4["... continues for each index"]
 
     S0 --> S1 --> S2 --> S3 --> S4

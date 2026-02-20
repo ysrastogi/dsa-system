@@ -117,8 +117,12 @@ Use `arr[value]` directly when domain allows — instant O(1) frequency.
 ```mermaid
 flowchart TD
     S0["seen = {}, target = 9"]
-    S1["i=0: num=2, need 7\n7 not in seen\nseen = {2→0}"]
-    S2["i=1: num=7, need 2\n2 in seen at index 0 ✅\nreturn [0, 1]"]
+    S1["i=0: num=2, need 7
+7 not in seen
+seen = {2→0}"]
+    S2["i=1: num=7, need 2
+2 in seen at index 0 ✅
+return [0, 1]"]
 
     S0 --> S1 --> S2
 
@@ -134,7 +138,8 @@ flowchart LR
         W2["t = 'silent'"]
     end
     subgraph "Frequency Array [26]"
-        F["e:+1-1=0, i:+1-1=0, l:+1-1=0\nn:+1-1=0, s:+1-1=0, t:+1-1=0"]
+        F["e:+1-1=0, i:+1-1=0, l:+1-1=0
+n:+1-1=0, s:+1-1=0, t:+1-1=0"]
     end
     subgraph "Result"
         R["All zeros → ✅ Anagram"]
@@ -152,13 +157,20 @@ flowchart LR
 ```mermaid
 flowchart TD
     S0["Array: [4, 3, 2, 7, 8, 2, 3, 1]"]
-    S1["num=4 → negate idx 3\n[4, 3, 2, -7, 8, 2, 3, 1]"]
-    S2["num=3 → negate idx 2\n[4, 3, -2, -7, 8, 2, 3, 1]"]
-    S3["num=2 → negate idx 1\n[4, -3, -2, -7, 8, 2, 3, 1]"]
-    S4["num=7 → negate idx 6\n[4, -3, -2, -7, 8, 2, -3, 1]"]
-    S5["num=8 → negate idx 7\n[4, -3, -2, -7, 8, 2, -3, -1]"]
-    S6["num=2 → idx 1 already negative!\n🔴 Duplicate: 2"]
-    S7["num=3 → idx 2 already negative!\n🔴 Duplicate: 3"]
+    S1["num=4 → negate idx 3
+[4, 3, 2, -7, 8, 2, 3, 1]"]
+    S2["num=3 → negate idx 2
+[4, 3, -2, -7, 8, 2, 3, 1]"]
+    S3["num=2 → negate idx 1
+[4, -3, -2, -7, 8, 2, 3, 1]"]
+    S4["num=7 → negate idx 6
+[4, -3, -2, -7, 8, 2, -3, 1]"]
+    S5["num=8 → negate idx 7
+[4, -3, -2, -7, 8, 2, -3, -1]"]
+    S6["num=2 → idx 1 already negative!
+🔴 Duplicate: 2"]
+    S7["num=3 → idx 2 already negative!
+🔴 Duplicate: 3"]
 
     S0 --> S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7
 

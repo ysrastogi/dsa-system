@@ -173,19 +173,25 @@ flowchart TD
 ```mermaid
 graph TD
     subgraph "i=0"
-        A["Stack: [4]\nMonotonic ✅"]
+        A["Stack: [4]
+Monotonic ✅"]
     end
     subgraph "i=1"
-        B["Pop 4 (5>4)\nStack: [5]"]
+        B["Pop 4 (5>4)
+Stack: [5]"]
     end
     subgraph "i=2"
-        C["Stack: [5, 2]\nDecreasing ✅"]
+        C["Stack: [5, 2]
+Decreasing ✅"]
     end
     subgraph "i=3"
-        D["Pop 2, Pop 5\n(10 > both)\nStack: [10]"]
+        D["Pop 2, Pop 5
+(10 > both)
+Stack: [10]"]
     end
     subgraph "i=4"
-        E["Stack: [10, 8]\nDecreasing ✅"]
+        E["Stack: [10, 8]
+Decreasing ✅"]
     end
 
     A --> B --> C --> D --> E
@@ -196,11 +202,19 @@ graph TD
 ```mermaid
 flowchart TD
     H["Heights: [2, 1, 5, 6, 2, 3, 0←sentinel]"]
-    S0["i=0: push 0 (h=2)\nstack:[0]"]
-    S1["i=1: h=1 < h=2 → pop 0\nwidth=1, area=2×1=2\npush 1\nstack:[1]"]
-    S2["i=2,3: push 2,3\nstack:[1,2,3] (h=1,5,6)"]
-    S3["i=4: h=2 < h=6 → pop 3\nw=4-2-1=1, area=6\npop 2: w=4-1-1=2, area=10 ✅"]
-    S4["push 4\nstack:[1,4]"]
+    S0["i=0: push 0 (h=2)
+stack:[0]"]
+    S1["i=1: h=1 < h=2 → pop 0
+width=1, area=2×1=2
+push 1
+stack:[1]"]
+    S2["i=2,3: push 2,3
+stack:[1,2,3] (h=1,5,6)"]
+    S3["i=4: h=2 < h=6 → pop 3
+w=4-2-1=1, area=6
+pop 2: w=4-1-1=2, area=10 ✅"]
+    S4["push 4
+stack:[1,4]"]
     S5["Continue... max area = 10"]
 
     H --> S0 --> S1 --> S2 --> S3 --> S4 --> S5

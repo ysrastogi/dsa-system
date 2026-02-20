@@ -37,7 +37,8 @@ Items: `[(wt:2, val:3), (wt:3, val:4), (wt:4, val:5)]`, Capacity: 5
 
 ```mermaid
 flowchart TD
-    A["knapsack(i=0, w=5)\nTake or skip item 0?"]
+    A["knapsack(i=0, w=5)
+Take or skip item 0?"]
     B["Skip: knapsack(i=1, w=5)"]
     C["Take: knapsack(i=1, w=3) + 3"]
     D["Skip: knapsack(i=2, w=5)"]

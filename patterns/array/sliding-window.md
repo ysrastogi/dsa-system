@@ -118,16 +118,20 @@ If you expand first and think later, you'll forget edge cases in the shrink logi
 ```mermaid
 flowchart LR
     subgraph "Window 1"
-        A["[②  ①  ⑤] 1  3  2\nsum=8"]
+        A["[②  ①  ⑤] 1  3  2
+sum=8"]
     end
     subgraph "Window 2"
-        B["2 [①  ⑤  ①] 3  2\nsum=7"]
+        B["2 [①  ⑤  ①] 3  2
+sum=7"]
     end
     subgraph "Window 3"
-        C["2  1 [⑤  ①  ③] 2\nsum=9 ✅ best"]
+        C["2  1 [⑤  ①  ③] 2
+sum=9 ✅ best"]
     end
     subgraph "Window 4"
-        D["2  1  5 [①  ③  ②]\nsum=6"]
+        D["2  1  5 [①  ③  ②]
+sum=6"]
     end
 
     A --> B --> C --> D
@@ -139,14 +143,22 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    S0["right=0: [a] freq={a:1}\n1 distinct ✅ best=1"]
-    S1["right=1: [a,r] freq={a:1,r:1}\n2 distinct ✅ best=2"]
-    S2["right=2: [a,r,a] freq={a:2,r:1}\n2 distinct ✅ best=3"]
-    S3["right=3: [a,r,a,a] freq={a:3,r:1}\n2 distinct ✅ best=4"]
-    S4["right=4: [a,r,a,a,c] freq={a:3,r:1,c:1}\n3 distinct ❌ SHRINK"]
+    S0["right=0: [a] freq={a:1}
+1 distinct ✅ best=1"]
+    S1["right=1: [a,r] freq={a:1,r:1}
+2 distinct ✅ best=2"]
+    S2["right=2: [a,r,a] freq={a:2,r:1}
+2 distinct ✅ best=3"]
+    S3["right=3: [a,r,a,a] freq={a:3,r:1}
+2 distinct ✅ best=4"]
+    S4["right=4: [a,r,a,a,c] freq={a:3,r:1,c:1}
+3 distinct ❌ SHRINK"]
     S5["shrink → [r,a,a,c] → still 3 ❌"]
-    S6["shrink → [a,a,c] freq={a:2,c:1}\n2 distinct ✅ best=4"]
-    S7["right=5: [a,a,c,i] freq={a:2,c:1,i:1}\n3 distinct ❌ SHRINK → [a,c,i] → [c,i]\nbest=4"]
+    S6["shrink → [a,a,c] freq={a:2,c:1}
+2 distinct ✅ best=4"]
+    S7["right=5: [a,a,c,i] freq={a:2,c:1,i:1}
+3 distinct ❌ SHRINK → [a,c,i] → [c,i]
+best=4"]
 
     S0 --> S1 --> S2 --> S3 --> S4 --> S5 --> S6 --> S7
 

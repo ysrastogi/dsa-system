@@ -33,24 +33,29 @@ func main() {
 		t.PrintTerminal()
 		traceResult = t
 	default:
-		fmt.Fprintf(os.Stderr, "Unknown problem: %s\n", *problem)
-		fmt.Fprintf(os.Stderr, "Available problems: max-path-sum, children-sum\n")
+		fmt.Fprintf(os.Stderr, "Unknown problem: %s
+", *problem)
+		fmt.Fprintf(os.Stderr, "Available problems: max-path-sum, children-sum
+")
 		os.Exit(1)
 	}
 
 	// Output JSON
 	jsonBytes, err := traceResult.ToJSON()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error marshaling trace: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error marshaling trace: %v
+", err)
 		os.Exit(1)
 	}
 
 	if *outFile != "" {
 		if err := os.WriteFile(*outFile, jsonBytes, 0644); err != nil {
-			fmt.Fprintf(os.Stderr, "Error writing file: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Error writing file: %v
+", err)
 			os.Exit(1)
 		}
-		fmt.Fprintf(os.Stderr, "Trace written to %s\n", *outFile)
+		fmt.Fprintf(os.Stderr, "Trace written to %s
+", *outFile)
 	} else {
 		fmt.Println(string(jsonBytes))
 	}

@@ -141,7 +141,9 @@ PROOF: mid splits [low, high]; one half is eliminated → terminates in O(log n)
 
 ```mermaid
 flowchart TD
-    S0["low=0, high=6\nmid=3, arr[3]=7\n7 == 7 ✅ Found!"]
+    S0["low=0, high=6
+mid=3, arr[3]=7
+7 == 7 ✅ Found!"]
 
     style S0 fill:#1b3d2d,color:#9effa5,stroke:#4caf50
 ```
@@ -150,10 +152,17 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    S0["low=0, high=7\nmid=3, arr[3]=5 ≥ 5\nhigh=3"]
-    S1["low=0, high=3\nmid=1, arr[1]=3 < 5\nlow=2"]
-    S2["low=2, high=3\nmid=2, arr[2]=5 ≥ 5\nhigh=2"]
-    S3["low=2, high=2 → low==high\nAnswer: index 2 ✅"]
+    S0["low=0, high=7
+mid=3, arr[3]=5 ≥ 5
+high=3"]
+    S1["low=0, high=3
+mid=1, arr[1]=3 < 5
+low=2"]
+    S2["low=2, high=3
+mid=2, arr[2]=5 ≥ 5
+high=2"]
+    S3["low=2, high=2 → low==high
+Answer: index 2 ✅"]
 
     S0 --> S1 --> S2 --> S3
 
@@ -165,12 +174,18 @@ flowchart TD
 ```mermaid
 flowchart TD
     P["weights = [1,2,3,4,5,6,7,8,9,10], days = 5"]
-    S0["Search space: [10, 55]\nmid=32, canShip? ✅ → high=32"]
-    S1["[10, 32]\nmid=21, canShip? ✅ → high=21"]
-    S2["[10, 21]\nmid=15, canShip? ✅ → high=15"]
-    S3["[10, 15]\nmid=12, canShip? ❌ → low=13"]
-    S4["[13, 15]\nmid=14, canShip? ✅ → high=14"]
-    S5["[13, 14]\nmid=13, canShip? ❌ → low=14"]
+    S0["Search space: [10, 55]
+mid=32, canShip? ✅ → high=32"]
+    S1["[10, 32]
+mid=21, canShip? ✅ → high=21"]
+    S2["[10, 21]
+mid=15, canShip? ✅ → high=15"]
+    S3["[10, 15]
+mid=12, canShip? ❌ → low=13"]
+    S4["[13, 15]
+mid=14, canShip? ✅ → high=14"]
+    S5["[13, 14]
+mid=13, canShip? ❌ → low=14"]
     S6["[14, 14] → Answer: 15"]
 
     P --> S0 --> S1 --> S2 --> S3 --> S4 --> S5 --> S6

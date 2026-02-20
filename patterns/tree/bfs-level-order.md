@@ -68,15 +68,23 @@ Width calculation on tree `[1, 3, 2, 5, null, null, 9, 6, null, null, 7]`:
 
 ```mermaid
 flowchart TD
-    A["Node 1 — idx 0\n───────────\nLevel 0: width = 1"]
-    B["Node 3 — idx 0\n(normalized)"]
+    A["Node 1 — idx 0
+───────────
+Level 0: width = 1"]
+    B["Node 3 — idx 0
+(normalized)"]
     C["Node 2 — idx 1"]
-    D["Node 5 — idx 0\n(normalized)"]
-    E["∅ — idx 1\n(not in queue)"]
-    F["∅ — idx 2\n(not in queue)"]
+    D["Node 5 — idx 0
+(normalized)"]
+    E["∅ — idx 1
+(not in queue)"]
+    F["∅ — idx 2
+(not in queue)"]
     G["Node 9 — idx 3"]
-    H["Node 6 — idx 0\n(normalized)"]
-    I["Node 7 — idx 7\n(not 7→ normalized to 7)"]
+    H["Node 6 — idx 0
+(normalized)"]
+    I["Node 7 — idx 7
+(not 7→ normalized to 7)"]
 
     A --> B
     A --> C

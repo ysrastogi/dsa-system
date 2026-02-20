@@ -48,16 +48,20 @@ flowchart TD
 ```mermaid
 flowchart LR
     subgraph "Iteration 0"
-        A["[① ② ③ ④ ⑤ ⑥ ⑦ ⑧]\n   L→            ←R"]
+        A["[① ② ③ ④ ⑤ ⑥ ⑦ ⑧]
+   L→            ←R"]
     end
     subgraph "Iteration 1"
-        B["[× ② ③ ④ ⑤ ⑥ ⑦ ×]\n     L→        ←R"]
+        B["[× ② ③ ④ ⑤ ⑥ ⑦ ×]
+     L→        ←R"]
     end
     subgraph "Iteration 2"
-        C["[× × ③ ④ ⑤ ⑥ × ×]\n       L→    ←R"]
+        C["[× × ③ ④ ⑤ ⑥ × ×]
+       L→    ←R"]
     end
     subgraph "Found!"
-        D["[× × × ④ ⑤ × × ×]\n         L  R ✅"]
+        D["[× × × ④ ⑤ × × ×]
+         L  R ✅"]
     end
 
     A --> B --> C --> D
@@ -129,7 +133,8 @@ flowchart TD
         P["[0, 3, 4, 8, 9, 14]"]
     end
     subgraph "Query: sum(1,3)"
-        Q["prefix[4] - prefix[1]\n= 9 - 3 = 6 ✅"]
+        Q["prefix[4] - prefix[1]
+= 9 - 3 = 6 ✅"]
     end
 
     A -->|"cumulative add"| P -->|"one subtraction"| Q
@@ -181,9 +186,12 @@ flowchart LR
 ```mermaid
 flowchart TD
     D["At index i, arr[i] = x"]
-    C{"current + x > x ?\n(is prefix positive?)"}
-    E["✅ EXTEND\ncurrent += x"]
-    R["🔄 RESTART\ncurrent = x"]
+    C{"current + x > x ?
+(is prefix positive?)"}
+    E["✅ EXTEND
+current += x"]
+    R["🔄 RESTART
+current = x"]
     U["best = max(best, current)"]
 
     D --> C
@@ -226,7 +234,8 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    S0["[1, 3, 5, 7, 9, 11, 13] target=9\nlow=0, high=6, mid=3 → 7 < 9"]
+    S0["[1, 3, 5, 7, 9, 11, 13] target=9
+low=0, high=6, mid=3 → 7 < 9"]
     S1["low=4, high=6, mid=5 → 11 > 9"]
     S2["low=4, high=4, mid=4 → 9 == 9 ✅"]
 
@@ -259,11 +268,19 @@ Array: `[3, 7, 1, 4, 2]` — finding Next Greater
 
 ```mermaid
 flowchart TD
-    S0["Push 3\nStack: [3]"]
-    S1["7 > 3 → Pop 3, NGE[0]=7\nPush 7\nStack: [7]"]
-    S2["1 < 7 → Push 1\nStack: [7, 1]"]
-    S3["4 > 1 → Pop 1, NGE[2]=4\n4 < 7 → Push 4\nStack: [7, 4]"]
-    S4["2 < 4 → Push 2\nStack: [7, 4, 2]\nDone → NGE[1,3,4] = -1"]
+    S0["Push 3
+Stack: [3]"]
+    S1["7 > 3 → Pop 3, NGE[0]=7
+Push 7
+Stack: [7]"]
+    S2["1 < 7 → Push 1
+Stack: [7, 1]"]
+    S3["4 > 1 → Pop 1, NGE[2]=4
+4 < 7 → Push 4
+Stack: [7, 4]"]
+    S4["2 < 4 → Push 2
+Stack: [7, 4, 2]
+Done → NGE[1,3,4] = -1"]
 
     S0 --> S1 --> S2 --> S3 --> S4
 
@@ -275,10 +292,12 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    Q["Stack has [A, B] where A > B\nNew element C arrives, C > B"]
+    Q["Stack has [A, B] where A > B
+New element C arrives, C > B"]
     P["Pop B → B's answer is C"]
     W["Why safe? Any future element D:"]
-    C1["If D > B → D would also > B, but C is closer\nSo C is still the right answer for B ✅"]
+    C1["If D > B → D would also > B, but C is closer
+So C is still the right answer for B ✅"]
     C2["B can never be useful again → remove it"]
 
     Q --> P --> W --> C1 --> C2
@@ -317,7 +336,8 @@ flowchart LR
         O["[3, 1, 3, 4, 2]"]
     end
     subgraph "After marking"
-        M["[-3, -1, -3, -4, 2]\nidx 4 still positive → 5 is missing!"]
+        M["[-3, -1, -3, -4, 2]
+idx 4 still positive → 5 is missing!"]
     end
 
     O -->|"negate arr[val-1]"| M
@@ -350,10 +370,12 @@ flowchart LR
 ```mermaid
 flowchart TD
     subgraph "Before"
-        B["[2, 0, 2, 1, 1, 0]\nlow=0, mid=0, high=5"]
+        B["[2, 0, 2, 1, 1, 0]
+low=0, mid=0, high=5"]
     end
     subgraph "After"
-        A["[0, 0, 1, 1, 2, 2]\nAll 0s left, 1s middle, 2s right"]
+        A["[0, 0, 1, 1, 2, 2]
+All 0s left, 1s middle, 2s right"]
     end
 
     B -->|"3 pointers: low, mid, high"| A

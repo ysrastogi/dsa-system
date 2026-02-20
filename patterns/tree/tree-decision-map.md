@@ -10,24 +10,37 @@
 
 ```mermaid
 flowchart TD
-    START["Read the problem"] --> Q1{"Does the problem ask\nto BUILD a tree?"}
+    START["Read the problem"] --> Q1{"Does the problem ask
+to BUILD a tree?"}
     
-    Q1 -->|Yes| P2["🔨 Tree Construction\ntree-construction.md"]
-    Q1 -->|No| Q2{"Is it just visiting/collecting\nnodes in some order?"}
+    Q1 -->|Yes| P2["🔨 Tree Construction
+tree-construction.md"]
+    Q1 -->|No| Q2{"Is it just visiting/collecting
+nodes in some order?"}
     
-    Q2 -->|Yes| P1["🔄 Traversal\ntraversal.md"]
-    Q2 -->|No| Q3{"Does each node return\nONE numeric value upward?"}
+    Q2 -->|Yes| P1["🔄 Traversal
+traversal.md"]
+    Q2 -->|No| Q3{"Does each node return
+ONE numeric value upward?"}
     
-    Q3 -->|Yes, simple| Q4{"Does node combine\nleft + right into a\nglobal answer?"}
-    Q3 -->|No| Q5{"Does info flow\nparent → child?"}
+    Q3 -->|Yes, simple| Q4{"Does node combine
+left + right into a
+global answer?"}
+    Q3 -->|No| Q5{"Does info flow
+parent → child?"}
     
-    Q4 -->|No| P3["📏 Tree Height\ntree-height.md"]
-    Q4 -->|Yes| P4["🧮 Tree DP\ntree-dp.md"]
+    Q4 -->|No| P3["📏 Tree Height
+tree-height.md"]
+    Q4 -->|Yes| P4["🧮 Tree DP
+tree-dp.md"]
     
-    Q5 -->|Yes| P5["⬇️ Path Tracking\npath-tracking.md"]
-    Q5 -->|No| Q6{"Does the problem need\nan answer for EVERY node?"}
+    Q5 -->|Yes| P5["⬇️ Path Tracking
+path-tracking.md"]
+    Q5 -->|No| Q6{"Does the problem need
+an answer for EVERY node?"}
     
-    Q6 -->|Yes| P6["🔄 Rerooting DP\nrerooting-dp.md"]
+    Q6 -->|Yes| P6["🔄 Rerooting DP
+rerooting-dp.md"]
     Q6 -->|No| P4
 ```
 
