@@ -16,11 +16,29 @@ This visualization traces `maxPathSum` on the tree `[1, 2, 3, 4, 5]`.
 
 ```mermaid
 flowchart TD
-    A["maxPathSum(1)\n───────────────\nL=7, R=3\nglobal = max(global, 7+3+1) = 11\nReturn: max(0, max(7,3)+1) = 8"]
-    B["maxPathSum(2)\n───────────────\nL=4, R=5\nglobal = max(global, 4+5+2) = 11 ✅\nReturn: max(0, max(4,5)+2) = 7"]
-    C["maxPathSum(3)\n───────────────\nL=0, R=0\nglobal = max(global, 0+0+3) = 3\nReturn: max(0, 3) = 3"]
-    D["maxPathSum(4)\n───────────────\nLeaf\nReturn: max(0, 4) = 4"]
-    E["maxPathSum(5)\n───────────────\nLeaf\nReturn: max(0, 5) = 5"]
+    A["maxPathSum(1)
+───────────────
+L=7, R=3
+global = max(global, 7+3+1) = 11
+Return: max(0, max(7,3)+1) = 8"]
+    B["maxPathSum(2)
+───────────────
+L=4, R=5
+global = max(global, 4+5+2) = 11 ✅
+Return: max(0, max(4,5)+2) = 7"]
+    C["maxPathSum(3)
+───────────────
+L=0, R=0
+global = max(global, 0+0+3) = 3
+Return: max(0, 3) = 3"]
+    D["maxPathSum(4)
+───────────────
+Leaf
+Return: max(0, 4) = 4"]
+    E["maxPathSum(5)
+───────────────
+Leaf
+Return: max(0, 5) = 5"]
 
     A -->|left| B
     A -->|right| C
