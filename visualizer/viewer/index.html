@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Solution Visualizer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0f0f1a;
+    --bg-secondary: #1a1a2e;
+    --bg-panel: rgba(26, 26, 46, 0.85);
+    --bg-glass: rgba(30, 30, 55, 0.6);
+    --border: rgba(100, 100, 180, 0.2);
+    --border-active: rgba(139, 92, 246, 0.5);
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-dim: #64748b;
+    --accent: #8b5cf6;
+    --accent-glow: rgba(139, 92, 246, 0.3);
+    --node-unvisited: #374151;
+    --node-current: #fbbf24;
+    --node-instack: #3b82f6;
+    --node-computed: #10b981;
+    --node-done: #065f46;
+    --node-update: #f59e0b;
+    --node-pathnode: #dc2626;
+    --edge-color: #4b5563;
+    --edge-active: #8b5cf6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .header h1 {
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .header .problem-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 4px 12px;
+    background: var(--bg-glass);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── Controls Bar ── */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+  }
+  .controls button {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-glass);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .controls button:hover {
+    background: var(--accent-glow);
+    border-color: var(--border-active);
+  }
+  .controls button:active { transform: scale(0.96); }
+  .controls button.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .controls button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .step-indicator {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0 8px;
+    min-width: 100px;
+    text-align: center;
+  }
+  .speed-control {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .speed-control input[type="range"] {
+    width: 80px;
+    accent-color: var(--accent);
+  }
+
+  /* ── Main Layout ── */
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    height: calc(100vh - 95px);
+  }
+
+  /* ── Tree Canvas ── */
+  .tree-panel {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 30%, rgba(6, 182, 212, 0.04) 0%, transparent 60%),
+      var(--bg-primary);
+  }
+  .tree-panel svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* SVG Nodes */
+  .tree-node circle {
+    transition: fill 0.4s ease, stroke 0.4s ease, r 0.3s ease;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+  }
+  .tree-node text {
+    font-family: 'JetBrains Mono', monospace;
+    fill: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+  }
+  .tree-node .return-label {
+    font-size: 11px;
+    font-weight: 400;
+    fill: var(--text-secondary);
+  }
+  .tree-edge {
+    stroke: var(--edge-color);
+    stroke-width: 2;
+    transition: stroke 0.4s ease, stroke-width 0.3s ease;
+  }
+  .tree-edge.active {
+    stroke: var(--edge-active);
+    stroke-width: 3;
+  }
+
+  /* Node states */
+  .node-unvisited circle { fill: var(--node-unvisited); stroke: #6b7280; stroke-width: 2; }
+  .node-current circle { fill: var(--node-current); stroke: #92400e; stroke-width: 3; }
+  .node-instack circle { fill: var(--node-instack); stroke: #1e40af; stroke-width: 2.5; }
+  .node-computed circle { fill: var(--node-computed); stroke: #065f46; stroke-width: 3; }
+  .node-done circle { fill: var(--node-done); stroke: #065f46; stroke-width: 2; }
+  .node-update circle { fill: var(--node-update); stroke: #b45309; stroke-width: 4; }
+  .node-pathnode circle { fill: var(--node-pathnode); stroke: #991b1b; stroke-width: 3; }
+
+  .node-current circle, .node-update circle {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.4)); }
+    50% { filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.8)); }
+  }
+
+  /* ── Right Sidebar ── */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+  }
+  .panel {
+    padding: 16px;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+
+  /* Variables panel */
+  .var-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .var-name { color: var(--text-secondary); }
+  .var-value {
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: background 0.3s;
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+  .var-value.changed {
+    background: rgba(139, 92, 246, 0.3);
+    animation: var-flash 0.6s ease;
+  }
+  .var-value.globalmax-up {
+    background: rgba(245, 158, 11, 0.3);
+    animation: var-flash 0.6s ease;
+  }
+  @keyframes var-flash {
+    0% { background: rgba(139, 92, 246, 0.6); }
+    100% { background: rgba(139, 92, 246, 0.1); }
+  }
+
+  /* Call stack */
+  .call-stack {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .stack-frame {
+    padding: 4px 8px;
+    margin: 2px 0;
+    border-radius: 4px;
+    border-left: 3px solid var(--border);
+    color: var(--text-secondary);
+    transition: all 0.3s;
+  }
+  .stack-frame.current {
+    border-left-color: var(--accent);
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--text-primary);
+  }
+
+  /* Message panel */
+  .message-box {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    min-height: 50px;
+  }
+  .message-box .emoji { font-size: 16px; margin-right: 4px; }
+  .action-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .action-visit { background: rgba(251, 191, 36, 0.2); color: #fbbf24; }
+  .action-return { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+  .action-update { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+  .action-compute { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+  .action-init { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+
+  /* Answer banner */
+  .answer-banner {
+    display: none;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 8px;
+  }
+  .answer-banner.visible { display: block; }
+  .answer-banner .answer-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--success);
+  }
+
+  /* ── Input Bar ── */
+  .input-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--bg-glass);
+    border-top: 1px solid var(--border);
+  }
+  .input-bar label {
+    font-size: 12px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .input-bar input[type="text"] {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-bar input[type="text"]:focus { border-color: var(--accent); }
+  .input-bar button {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 20px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .input-bar button:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--accent-glow); }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 12px;
+    padding: 8px 24px;
+    font-size: 11px;
+    color: var(--text-dim);
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* ── Keyboard shortcut hints ── */
+  kbd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 1px 5px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: var(--bg-glass);
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>DSA Solution Visualizer</h1>
+  <div class="problem-name" id="problemName">max-path-sum</div>
+</div>
+
+<div class="controls">
+  <button id="btnFirst" title="First step">⏮</button>
+  <button id="btnPrev" title="Previous step">◀ Prev<kbd>←</kbd></button>
+  <span class="step-indicator" id="stepIndicator">Step 0 / 0</span>
+  <button id="btnNext" title="Next step">Next ▶<kbd>→</kbd></button>
+  <button id="btnLast" title="Last step">⏭</button>
+  <button id="btnPlay" title="Auto-play">▶ Play<kbd>Space</kbd></button>
+  <div class="speed-control">
+    <span>Speed</span>
+    <input type="range" id="speedSlider" min="100" max="2000" value="800" step="100">
+    <span id="speedLabel">0.8s</span>
+  </div>
+</div>
+
+<div class="main">
+  <div class="tree-panel">
+    <svg id="treeSvg"></svg>
+  </div>
+
+  <div class="sidebar">
+    <div class="panel">
+      <div class="panel-title">💬 Current Step</div>
+      <div id="actionBadge" class="action-badge action-init">init</div>
+      <div class="message-box" id="messageBox">Load a trace to begin.</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">📊 Variables</div>
+      <div class="var-grid" id="varGrid"></div>
+      <div class="answer-banner" id="answerBanner">
+        <div>✅ Answer</div>
+        <div class="answer-value" id="answerValue"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">📚 Call Stack</div>
+      <div class="call-stack" id="callStack">
+        <div class="stack-frame" style="color: var(--text-dim);">Empty</div>
+      </div>
+    </div>
+
+    <div class="input-bar">
+      <label>Input:</label>
+      <input type="text" id="treeInput" value="[-10,9,20,null,null,15,7]" placeholder="[-10,9,20,null,null,15,7]">
+      <button id="btnRun">▶ Run</button>
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot" style="background: var(--node-unvisited)"></span>Unvisited</div>
+  <div class="legend-item"><span class="legend-dot" style="background: var(--node-current)"></span>Visiting</div>
+  <div class="legend-item"><span class="legend-dot" style="background: var(--node-instack)"></span>On Stack</div>
+  <div class="legend-item"><span class="legend-dot" style="background: var(--node-computed)"></span>Computed</div>
+  <div class="legend-item"><span class="legend-dot" style="background: var(--node-done)"></span>Done</div>
+  <div class="legend-item"><span class="legend-dot" style="background: var(--node-update)"></span>Global Max ↑</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  DSA Visualizer Engine
+// ══════════════════════════════════════════════════════════
+
+let trace = null;
+let currentStep = -1;
+let isPlaying = false;
+let playTimer = null;
+
+const NODE_RADIUS = 24;
+const PADDING = 60;
+
+// ── DOM refs ──
+const svg = document.getElementById('treeSvg');
+const stepIndicator = document.getElementById('stepIndicator');
+const varGrid = document.getElementById('varGrid');
+const callStack = document.getElementById('callStack');
+const messageBox = document.getElementById('messageBox');
+const actionBadge = document.getElementById('actionBadge');
+const answerBanner = document.getElementById('answerBanner');
+const answerValue = document.getElementById('answerValue');
+const problemName = document.getElementById('problemName');
+const speedSlider = document.getElementById('speedSlider');
+const speedLabel = document.getElementById('speedLabel');
+const btnPlay = document.getElementById('btnPlay');
+
+// ── Controls ──
+document.getElementById('btnFirst').addEventListener('click', () => goToStep(0));
+document.getElementById('btnPrev').addEventListener('click', () => goToStep(currentStep - 1));
+document.getElementById('btnNext').addEventListener('click', () => goToStep(currentStep + 1));
+document.getElementById('btnLast').addEventListener('click', () => goToStep(trace.steps.length - 1));
+document.getElementById('btnPlay').addEventListener('click', togglePlay);
+document.getElementById('btnRun').addEventListener('click', runFromInput);
+
+speedSlider.addEventListener('input', () => {
+  speedLabel.textContent = (speedSlider.value / 1000).toFixed(1) + 's';
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowLeft') goToStep(currentStep - 1);
+  else if (e.key === 'ArrowRight') goToStep(currentStep + 1);
+  else if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+});
+
+// ── Load trace ──
+function loadTrace(data) {
+  trace = data;
+  currentStep = -1;
+  isPlaying = false;
+  clearInterval(playTimer);
+  btnPlay.textContent = '▶ Play';
+  btnPlay.classList.remove('active');
+
+  problemName.textContent = trace.problem + ' · ' + trace.algorithm;
+  renderTree();
+  goToStep(0);
+}
+
+// ── Render tree (SVG) ──
+function renderTree() {
+  if (!trace || !trace.nodes.length) return;
+
+  // Compute bounds
+  const xs = trace.nodes.map(n => n.x);
+  const ys = trace.nodes.map(n => n.y);
+  const minX = Math.min(...xs) - PADDING;
+  const maxX = Math.max(...xs) + PADDING;
+  const minY = Math.min(...ys) - PADDING;
+  const maxY = Math.max(...ys) + PADDING;
+
+  const w = maxX - minX;
+  const h = maxY - minY;
+  svg.setAttribute('viewBox', `${minX} ${minY} ${w} ${h}`);
+
+  // Build node map
+  const nodeMap = {};
+  trace.nodes.forEach(n => { nodeMap[n.id] = n; });
+
+  let html = '';
+
+  // Draw edges first
+  trace.nodes.forEach(n => {
+    if (n.leftId && nodeMap[n.leftId]) {
+      const child = nodeMap[n.leftId];
+      html += `<line class="tree-edge" id="edge-${n.id}-${n.leftId}"
+        x1="${n.x}" y1="${n.y}" x2="${child.x}" y2="${child.y}" />`;
+    }
+    if (n.rightId && nodeMap[n.rightId]) {
+      const child = nodeMap[n.rightId];
+      html += `<line class="tree-edge" id="edge-${n.id}-${n.rightId}"
+        x1="${n.x}" y1="${n.y}" x2="${child.x}" y2="${child.y}" />`;
+    }
+  });
+
+  // Draw nodes
+  trace.nodes.forEach(n => {
+    html += `<g class="tree-node node-unvisited" id="node-${n.id}" transform="translate(${n.x}, ${n.y})">
+      <circle r="${NODE_RADIUS}" />
+      <text class="node-val">${n.val}</text>
+      <text class="return-label" dy="42" id="return-${n.id}"></text>
+    </g>`;
+  });
+
+  svg.innerHTML = html;
+}
+
+// ── Go to step ──
+let prevVars = {};
+
+function goToStep(idx) {
+  if (!trace) return;
+  if (idx < 0) idx = 0;
+  if (idx >= trace.steps.length) {
+    idx = trace.steps.length - 1;
+    stopPlay();
+  }
+
+  currentStep = idx;
+  const step = trace.steps[idx];
+
+  // Update step indicator
+  stepIndicator.textContent = `Step ${idx + 1} / ${trace.steps.length}`;
+
+  // Update button states
+  document.getElementById('btnPrev').disabled = idx === 0;
+  document.getElementById('btnFirst').disabled = idx === 0;
+  document.getElementById('btnNext').disabled = idx === trace.steps.length - 1;
+  document.getElementById('btnLast').disabled = idx === trace.steps.length - 1;
+
+  // Update node highlights
+  updateNodeStates(step.highlights);
+
+  // Update return labels for completed nodes
+  updateReturnLabels(idx);
+
+  // Update variables panel
+  updateVariables(step.variables);
+
+  // Update call stack
+  updateCallStack(step.callStack);
+
+  // Update message
+  updateMessage(step);
+
+  // Show answer banner on last step
+  if (idx === trace.steps.length - 1) {
+    answerBanner.classList.add('visible');
+    answerValue.textContent = trace.answer;
+  } else {
+    answerBanner.classList.remove('visible');
+  }
+}
+
+function updateNodeStates(highlights) {
+  // Reset all nodes
+  trace.nodes.forEach(n => {
+    const el = document.getElementById('node-' + n.id);
+    if (el) {
+      el.className.baseVal = 'tree-node node-unvisited';
+    }
+  });
+
+  // Apply highlights
+  if (highlights) {
+    highlights.forEach(h => {
+      const el = document.getElementById('node-' + h.nodeId);
+      if (el) {
+        el.className.baseVal = 'tree-node node-' + h.state;
+      }
+    });
+  }
+}
+
+function updateReturnLabels(upToStep) {
+  // Clear all return labels
+  trace.nodes.forEach(n => {
+    const el = document.getElementById('return-' + n.id);
+    if (el) el.textContent = '';
+  });
+
+  // Find return steps up to current index
+  for (let i = 0; i <= upToStep; i++) {
+    const s = trace.steps[i];
+    if (s.action === 'return' && s.variables && s.variables['return'] !== undefined) {
+      const el = document.getElementById('return-' + s.nodeId);
+      if (el) el.textContent = '↩ ' + s.variables['return'];
+    }
+  }
+}
+
+function updateVariables(vars) {
+  if (!vars) { varGrid.innerHTML = ''; prevVars = {}; return; }
+
+  // Define display order for known variables
+  const order = ['globalMax', 'node', 'left', 'right', 'forked', 'return'];
+  const keys = order.filter(k => k in vars);
+  // Add any other keys not in the order
+  Object.keys(vars).forEach(k => { if (!order.includes(k)) keys.push(k); });
+
+  let html = '';
+  keys.forEach(k => {
+    const changed = prevVars[k] !== undefined && prevVars[k] !== vars[k];
+    const isGlobalUp = k === 'globalMax' && changed && vars[k] > (prevVars[k] || -Infinity);
+    const cls = isGlobalUp ? 'globalmax-up' : (changed ? 'changed' : '');
+    const icon = isGlobalUp ? ' 🔼' : '';
+    html += `<span class="var-name">${k}</span>`;
+    html += `<span class="var-value ${cls}">${vars[k]}${icon}</span>`;
+  });
+
+  varGrid.innerHTML = html;
+  prevVars = { ...vars };
+}
+
+function updateCallStack(stack) {
+  if (!stack || stack.length === 0) {
+    callStack.innerHTML = '<div class="stack-frame" style="color: var(--text-dim);">Empty</div>';
+    return;
+  }
+
+  callStack.innerHTML = stack.map((frame, i) => {
+    const isCurrent = i === stack.length - 1;
+    const indent = '&nbsp;'.repeat(i * 2);
+    const arrow = i > 0 ? '└→ ' : '';
+    return `<div class="stack-frame ${isCurrent ? 'current' : ''}">${indent}${arrow}${frame}</div>`;
+  }).join('');
+}
+
+function updateMessage(step) {
+  actionBadge.textContent = step.action;
+  actionBadge.className = 'action-badge action-' + step.action;
+  messageBox.textContent = step.message || '';
+}
+
+// ── Auto-play ──
+function togglePlay() {
+  if (isPlaying) stopPlay();
+  else startPlay();
+}
+
+function startPlay() {
+  if (currentStep >= trace.steps.length - 1) goToStep(0);
+  isPlaying = true;
+  btnPlay.textContent = '⏸ Pause';
+  btnPlay.classList.add('active');
+  playTimer = setInterval(() => {
+    if (currentStep >= trace.steps.length - 1) { stopPlay(); return; }
+    goToStep(currentStep + 1);
+  }, parseInt(speedSlider.value));
+}
+
+function stopPlay() {
+  isPlaying = false;
+  clearInterval(playTimer);
+  btnPlay.textContent = '▶ Play';
+  btnPlay.classList.remove('active');
+}
+
+// ── Run from input (embedded algorithm) ──
+function runFromInput() {
+  const inputStr = document.getElementById('treeInput').value.trim();
+  const arr = parseInputArray(inputStr);
+
+  // Run the max-path-sum algorithm with tracing in JS
+  const result = traceMaxPathSum(arr);
+  loadTrace(result);
+}
+
+function parseInputArray(s) {
+  s = s.replace(/^\[|\]$/g, '');
+  return s.split(',').map(p => {
+    p = p.trim();
+    if (p === 'null' || p === 'nil' || p === '') return null;
+    return parseInt(p);
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  Embedded JS Algorithm Tracer (for dynamic input)
+// ══════════════════════════════════════════════════════════
+function traceMaxPathSum(input) {
+  // Build tree
+  if (!input.length || input[0] === null) return emptyTrace();
+
+  const nodesArr = [];
+  const treeNodes = [];
+
+  // Create tree nodes
+  const root = { id: 'n0', val: input[0], left: null, right: null };
+  treeNodes.push(root);
+  const queue = [root];
+  let i = 1;
+
+  while (queue.length && i < input.length) {
+    const node = queue.shift();
+    if (i < input.length && input[i] !== null) {
+      node.left = { id: 'n' + i, val: input[i], left: null, right: null };
+      treeNodes.push(node.left);
+      queue.push(node.left);
+    }
+    i++;
+    if (i < input.length && input[i] !== null) {
+      node.right = { id: 'n' + i, val: input[i], left: null, right: null };
+      treeNodes.push(node.right);
+      queue.push(node.right);
+    }
+    i++;
+  }
+
+  // Layout using inorder traversal
+  let xCounter = 0;
+  const Y_SPACING = 80;
+  const nodeMap = {};
+
+  function inorderLayout(node, depth) {
+    if (!node) return;
+    inorderLayout(node.left, depth + 1);
+    nodeMap[node.id] = {
+      id: node.id, val: node.val,
+      leftId: node.left ? node.left.id : undefined,
+      rightId: node.right ? node.right.id : undefined,
+      x: xCounter * 100, y: depth * Y_SPACING
+    };
+    nodesArr.push(nodeMap[node.id]);
+    xCounter++;
+    inorderLayout(node.right, depth + 1);
+  }
+  inorderLayout(root, 0);
+
+  // Trace execution
+  const steps = [];
+  let stepId = 0;
+  let globalMax = root.val;
+  const callStackArr = [];
+  const nodeStates = {};
+  treeNodes.forEach(n => { nodeStates[n.id] = 'unvisited'; });
+
+  function buildHighlights(currentId, currentState) {
+    const old = nodeStates[currentId];
+    nodeStates[currentId] = currentState;
+    const hl = nodesArr.map(n => ({ nodeId: n.id, state: nodeStates[n.id] }));
+    if (currentState === 'current') nodeStates[currentId] = old;
+    return hl;
+  }
+
+  function emit(action, nodeId, vars, highlights, msg) {
+    steps.push({
+      id: ++stepId, action, nodeId,
+      variables: { ...vars },
+      highlights: highlights.map(h => ({ ...h })),
+      message: msg,
+      callStack: [...callStackArr]
+    });
+  }
+
+  // Init step
+  emit('init', root.id,
+    { globalMax },
+    buildHighlights(root.id, 'unvisited'),
+    `Initialize globalMax = ${globalMax} (root value)`
+  );
+
+  function dfs(node) {
+    if (!node) return 0;
+
+    callStackArr.push(`dfs(${node.val})`);
+    emit('visit', node.id,
+      { globalMax, node: node.val },
+      buildHighlights(node.id, 'current'),
+      `Enter dfs(${node.val})`
+    );
+    nodeStates[node.id] = 'instack';
+
+    const left = Math.max(0, dfs(node.left));
+    const right = Math.max(0, dfs(node.right));
+    const forked = left + right + node.val;
+    const returnVal = Math.max(left, right) + node.val;
+
+    if (forked > globalMax) {
+      globalMax = forked;
+      nodeStates[node.id] = 'computed';
+      emit('update', node.id,
+        { globalMax, left, right, forked, return: returnVal },
+        buildHighlights(node.id, 'computed'),
+        `🏆 NEW GLOBAL MAX! forked = ${left} + ${right} + ${node.val} = ${forked}`
+      );
+    } else {
+      nodeStates[node.id] = 'computed';
+      emit('compute', node.id,
+        { globalMax, left, right, forked, return: returnVal },
+        buildHighlights(node.id, 'computed'),
+        `forked = ${left} + ${right} + ${node.val} = ${forked} (no update, global=${globalMax})`
+      );
+    }
+
+    nodeStates[node.id] = 'done';
+    emit('return', node.id,
+      { globalMax, return: returnVal },
+      buildHighlights(node.id, 'done'),
+      `Return ${returnVal} to parent (best single chain upward)`
+    );
+
+    callStackArr.pop();
+    return returnVal;
+  }
+
+  dfs(root);
+
+  return {
+    problem: 'max-path-sum',
+    algorithm: 'dfs-postorder',
+    treeInput: input,
+    nodes: nodesArr,
+    steps, answer: globalMax
+  };
+}
+
+function emptyTrace() {
+  return { problem: 'max-path-sum', algorithm: 'dfs-postorder', treeInput: [], nodes: [], steps: [], answer: 0 };
+}
+
+// ══════════════════════════════════════════════════════════
+//  Initialization — load from embedded data or fetch
+// ══════════════════════════════════════════════════════════
+
+// Check for embedded trace data (set by Go CLI)
+if (typeof TRACE_DATA !== 'undefined') {
+  loadTrace(TRACE_DATA);
+} else {
+  // Try to fetch trace.json from the same directory
+  fetch('trace.json')
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (data) loadTrace(data);
+      else runFromInput(); // Fall back to JS-traced default input
+    })
+    .catch(() => runFromInput());
+}
+</script>
+</body>
+</html>

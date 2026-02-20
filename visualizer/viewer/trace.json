@@ -1,0 +1,642 @@
+{
+  "problem": "max-path-sum",
+  "algorithm": "dfs-postorder",
+  "treeInput": [
+    -10,
+    9,
+    20,
+    null,
+    null,
+    15,
+    7
+  ],
+  "nodes": [
+    {
+      "id": "n1",
+      "val": 9,
+      "x": 0,
+      "y": 80
+    },
+    {
+      "id": "n0",
+      "val": -10,
+      "leftId": "n1",
+      "rightId": "n2",
+      "x": 100,
+      "y": 0
+    },
+    {
+      "id": "n5",
+      "val": 15,
+      "x": 200,
+      "y": 160
+    },
+    {
+      "id": "n2",
+      "val": 20,
+      "leftId": "n5",
+      "rightId": "n6",
+      "x": 300,
+      "y": 80
+    },
+    {
+      "id": "n6",
+      "val": 7,
+      "x": 400,
+      "y": 160
+    }
+  ],
+  "steps": [
+    {
+      "id": 1,
+      "action": "init",
+      "nodeId": "n0",
+      "variables": {
+        "globalMax": -10
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n0",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n5",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n2",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "Initialize globalMax = -10 (root value)",
+      "callStack": []
+    },
+    {
+      "id": 2,
+      "action": "visit",
+      "nodeId": "n0",
+      "variables": {
+        "globalMax": -10,
+        "node": -10
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n0",
+          "state": "current"
+        },
+        {
+          "nodeId": "n5",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n2",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "Enter dfs(-10)",
+      "callStack": [
+        "dfs(-10)"
+      ]
+    },
+    {
+      "id": 3,
+      "action": "visit",
+      "nodeId": "n1",
+      "variables": {
+        "globalMax": -10,
+        "node": 9
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "current"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n2",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "Enter dfs(9)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(9)"
+      ]
+    },
+    {
+      "id": 4,
+      "action": "update",
+      "nodeId": "n1",
+      "variables": {
+        "forked": 9,
+        "globalMax": 9,
+        "left": 0,
+        "return": 9,
+        "right": 0
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "computed"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n2",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "🏆 NEW GLOBAL MAX! forked = 0 + 0 + 9 = 9",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(9)"
+      ]
+    },
+    {
+      "id": 5,
+      "action": "return",
+      "nodeId": "n1",
+      "variables": {
+        "globalMax": 9,
+        "return": 9
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n2",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "Return 9 to parent (best single chain upward)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(9)"
+      ]
+    },
+    {
+      "id": 6,
+      "action": "visit",
+      "nodeId": "n2",
+      "variables": {
+        "globalMax": 9,
+        "node": 20
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "unvisited"
+        },
+        {
+          "nodeId": "n2",
+          "state": "current"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "Enter dfs(20)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)"
+      ]
+    },
+    {
+      "id": 7,
+      "action": "visit",
+      "nodeId": "n5",
+      "variables": {
+        "globalMax": 9,
+        "node": 15
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "current"
+        },
+        {
+          "nodeId": "n2",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "Enter dfs(15)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)",
+        "dfs(15)"
+      ]
+    },
+    {
+      "id": 8,
+      "action": "update",
+      "nodeId": "n5",
+      "variables": {
+        "forked": 15,
+        "globalMax": 15,
+        "left": 0,
+        "return": 15,
+        "right": 0
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "computed"
+        },
+        {
+          "nodeId": "n2",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "🏆 NEW GLOBAL MAX! forked = 0 + 0 + 15 = 15",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)",
+        "dfs(15)"
+      ]
+    },
+    {
+      "id": 9,
+      "action": "return",
+      "nodeId": "n5",
+      "variables": {
+        "globalMax": 15,
+        "return": 15
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "done"
+        },
+        {
+          "nodeId": "n2",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n6",
+          "state": "unvisited"
+        }
+      ],
+      "message": "Return 15 to parent (best single chain upward)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)",
+        "dfs(15)"
+      ]
+    },
+    {
+      "id": 10,
+      "action": "visit",
+      "nodeId": "n6",
+      "variables": {
+        "globalMax": 15,
+        "node": 7
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "done"
+        },
+        {
+          "nodeId": "n2",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n6",
+          "state": "current"
+        }
+      ],
+      "message": "Enter dfs(7)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)",
+        "dfs(7)"
+      ]
+    },
+    {
+      "id": 11,
+      "action": "compute",
+      "nodeId": "n6",
+      "variables": {
+        "forked": 7,
+        "globalMax": 15,
+        "left": 0,
+        "return": 7,
+        "right": 0
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "done"
+        },
+        {
+          "nodeId": "n2",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n6",
+          "state": "computed"
+        }
+      ],
+      "message": "forked = 0 + 0 + 7 = 7 (no update, global=15)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)",
+        "dfs(7)"
+      ]
+    },
+    {
+      "id": 12,
+      "action": "return",
+      "nodeId": "n6",
+      "variables": {
+        "globalMax": 15,
+        "return": 7
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "done"
+        },
+        {
+          "nodeId": "n2",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n6",
+          "state": "done"
+        }
+      ],
+      "message": "Return 7 to parent (best single chain upward)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)",
+        "dfs(7)"
+      ]
+    },
+    {
+      "id": 13,
+      "action": "update",
+      "nodeId": "n2",
+      "variables": {
+        "forked": 42,
+        "globalMax": 42,
+        "left": 15,
+        "return": 35,
+        "right": 7
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "done"
+        },
+        {
+          "nodeId": "n2",
+          "state": "computed"
+        },
+        {
+          "nodeId": "n6",
+          "state": "done"
+        }
+      ],
+      "message": "🏆 NEW GLOBAL MAX! forked = 15 + 7 + 20 = 42",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)"
+      ]
+    },
+    {
+      "id": 14,
+      "action": "return",
+      "nodeId": "n2",
+      "variables": {
+        "globalMax": 42,
+        "return": 35
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "instack"
+        },
+        {
+          "nodeId": "n5",
+          "state": "done"
+        },
+        {
+          "nodeId": "n2",
+          "state": "done"
+        },
+        {
+          "nodeId": "n6",
+          "state": "done"
+        }
+      ],
+      "message": "Return 35 to parent (best single chain upward)",
+      "callStack": [
+        "dfs(-10)",
+        "dfs(20)"
+      ]
+    },
+    {
+      "id": 15,
+      "action": "compute",
+      "nodeId": "n0",
+      "variables": {
+        "forked": 34,
+        "globalMax": 42,
+        "left": 9,
+        "return": 25,
+        "right": 35
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "computed"
+        },
+        {
+          "nodeId": "n5",
+          "state": "done"
+        },
+        {
+          "nodeId": "n2",
+          "state": "done"
+        },
+        {
+          "nodeId": "n6",
+          "state": "done"
+        }
+      ],
+      "message": "forked = 9 + 35 + -10 = 34 (no update, global=42)",
+      "callStack": [
+        "dfs(-10)"
+      ]
+    },
+    {
+      "id": 16,
+      "action": "return",
+      "nodeId": "n0",
+      "variables": {
+        "globalMax": 42,
+        "return": 25
+      },
+      "highlights": [
+        {
+          "nodeId": "n1",
+          "state": "done"
+        },
+        {
+          "nodeId": "n0",
+          "state": "done"
+        },
+        {
+          "nodeId": "n5",
+          "state": "done"
+        },
+        {
+          "nodeId": "n2",
+          "state": "done"
+        },
+        {
+          "nodeId": "n6",
+          "state": "done"
+        }
+      ],
+      "message": "Return 25 to parent (best single chain upward)",
+      "callStack": [
+        "dfs(-10)"
+      ]
+    }
+  ],
+  "answer": 42
+}
